@@ -1,20 +1,25 @@
-# 1. Physically Embodied Gaussian Splatting: A Realtime Correctable World Model for Robotics
+# 1. Dynamic 3D Gaussian Tracking for Graph-Based Neural Dynamics Modeling
 1. Links
    1. https://arxiv.org/pdf/2406.10788
-   2. https://embodied-gaussians.github.io
-2. Authors: Jad Abou-Chakra (lebanon surname), Krishan Rana, Feras Dayoub (middle-east, lebanon surname), Niko Sunderhauf
-3. Affliations: Queensland University of Technology (QUT), University of Adelaide
-4. TL;DR: An approach combines gaussian splatting with PBD, which enables a world model with both physical and visual representaion.
+   2. https://gaussian-gbnd.github.io/
+2. Authors: Mingtong Zhang, Kaifeng Zhang, Yunzhu Li (AP)
+3. Affliations: Columbia University
+4. TL;DR: A framework that combines a PBD model with 3DGS, enabling the training of dynamics models using unlabeled multi-view (posed) video observations.
 
 **TODO**
-1. read PBD
-2. try warp https://github.com/NVIDIA/warp
-    
+1. read Dyn3DGS (Luiten, J., Kopanas, G., Leibe, B. and Ramanan, D., 2023. Dynamic 3d Gaussians: Tracking by persistent dynamic view synthesis. arXiv preprint arXiv:2308.09713.)
+2. read nn-based simulator (P. Ma, P. Y. Chen, B. Deng, J. B. Tenenbaum, T. Du, C. Gan, and W. Matusik. Learning neural constitutive laws from motion observations for generalizable pde dynamics. In International Conference on Machine Learning, pages 23279–23300. PMLR, 2023.)
+
+## Existing problem
+### Dynamics Modeling of Real-World Objects
+1. For those who use physics-based simulator to get (gradient free/based) physical params, they require accurate perception to transfer real to sim.
+2. NN based simulators learn dynamics w/o analytical model.
+
 ## Contributions
 1. A mechanism that combines gaussian seeds with particles from PBD, captures both visual and physical information about the scene
 2. A real-time method to correct the particle states using visual feedback
 ## Key concepts
-1. Position-Based Dynamics (PBD)
+1. Dynamic 3D Gaussian Splatting with Dense Tracking
    1. Resources:
       1. original paper: https://matthias-research.github.io/pages/publications/posBasedDyn.pdf
       2. tutorial from original author: https://matthias-research.github.io/pages/publications/PBDTutorial2017-CourseNotes.pdf
