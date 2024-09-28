@@ -52,6 +52,6 @@ One could follow the guidance of the official documentation
     1.  the raw data of imu is recorded in .csv files
     2.  the video stream data (both color and depth) is recorded in `.bag` files, ros1 is needed for decoding and playing.
     3.  the image is recorded in `.png` files.
-
+2. Watch out to the timestamp of each record from different sources due to asynchronous saving.
 ## 5. FAQ
 **[WIP]**
