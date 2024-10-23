@@ -9,7 +9,7 @@ A system that enables quadruped robots to interact with objects using their legs
 
 ## Thoughts and critisims
 1. the system architecture is useful
-2. their task is object pose alignment, which is an easier level of joint configuration alignment/articulated object pose alignment.
+2. their task is object pose alignment, which is an easier level of joint configuration alignment/articulated object pose alignment/articulated object pose alignment with contraint on joint configuration
 3. instead of apply impedance control for all joints, the user only use it for leg doing manipulation task
 4. the perception module needs target pose as input, which has cost to get
 ## Related works
