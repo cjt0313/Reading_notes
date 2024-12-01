@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>&lbrack;IEEE access&lsquo;24&rbrack; A Review of Differentiable Simulators</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="ieee-access24-a-review-of-differentiable-simulators">[IEEE access‘24] A Review of Differentiable Simulators</h1>
+<ol>
+<li>Link: <a href="https://ieeexplore.ieee.org/abstract/document/10589638">https://ieeexplore.ieee.org/abstract/document/10589638</a></li>
+<li>Authors: R Newbury, J Collins, K He, J Pan, I Posner, D Howard, Akan Cosgun from Monash University</li>
+</ol>
+<h1 id="key-concepts">Key Concepts</h1>
+<p><strong>Differentiable simulator</strong>
+<strong>1. Defination:</strong> Capable of calculating gradients throughout the entire duration of a simulation for a given loss function with respect to desired parameters
+<strong>2. Uses</strong></p>
+<ol>
+<li>
+<p>system identification</p>
+</li>
+<li>
+<p>trajectory optimization</p>
+</li>
+<li>
+<p>policy optimization</p>
+</li>
+<li>
+<p>morphology optimization</p>
+</li>
+<li>
+<p>components</p>
+<ol>
+<li>gradient calculation: computing gradients with respect to the simulator’s parameters</li>
+<li>dynamics mode: the underlying physics governing the simulated system</li>
+<li>contact model: simulate interactions between objects during collision events</li>
+<li>integrator: numerically solves the equations of motion over discrete time steps</li>
+</ol>
+</li>
+<li>
+<p>gradient calculation</p>
+<ol>
+<li>automatic differentiation: just like autograd
+<ol>
+<li>pytorch autograd/JAX/Difftachi</li>
+</ol>
+</li>
+<li>symbolic differentiation: grad as symbolised equations
+<ol>
+<li>the size grows rapidly with the complexity of the function</li>
+<li>typically only used when the dynamics are simple, or for a few select components of the simulator</li>
+</ol>
+</li>
+<li>analytical gradients
+<ol>
+<li>provides an explicit expression for the gradient a priori</li>
+<li>be computed more quickly and accurately</li>
+<li>can be used in discontinuous processes or phenomena</li>
+</ol>
+</li>
+<li>dynamics model: mathematical model that describes the behavior of a system over time
+<ol>
+<li>rigid body dynamics
+<ol>
+<li>Newtonian dynamics: F=ma, only translational motion but no rotational motion</li>
+<li>Newton-Euler: <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mo stretchy="false">(</mo><mi>q</mi><mo stretchy="false">)</mo><mover accent="true"><mi>q</mi><mo>¨</mo></mover><mo>+</mo><mi>C</mi><mo stretchy="false">(</mo><mi>q</mi><mo separator="true">,</mo><mover accent="true"><mi>q</mi><mo>˙</mo></mover><mo stretchy="false">)</mo><mo>=</mo><mi>τ</mi></mrow><annotation encoding="application/x-tex">M(q)\ddot{q}+C(q, \dot{q}) = \tau</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mclose">)</span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6679em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.1667em;"><span class="mord">¨</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6679em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.0556em;"><span class="mord">˙</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.1132em;">τ</span></span></span></span>
+<ol>
+<li>the vector of generalized force is equal to mass matrix times acceleration plus the bias orce matrix which accounts for other forces acting on the system, including centrifugal forces, Coriolis forces and gravity.</li>
+</ol>
+</li>
+<li>Lagrangian dynamics
+<ol>
+<li>principle of least action, which states that the motion of a system will minimize the action, which is a function of the system’s configuration and its time derivatives</li>
+<li>for a single particle, <p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>L</mi><mo>=</mo><mi>T</mi><mo>−</mo><mi>V</mi></mrow><annotation encoding="application/x-tex">L=T-V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.22222em;">V</span></span></span></span></span></p>
+
+<ol>
+<li>T is the kinetic energy and V is the potential energy</li>
+</ol>
+</li>
+<li>Euler-Lagrange equation: equations of motion  for a system in terms of its Lagrangian
+<ol>
+<li>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>t</mi></mrow></mfrac><mo stretchy="false">(</mo><mfrac><mrow><mi mathvariant="normal">∂</mi><mi mathvariant="script">L</mi></mrow><mrow><mi mathvariant="normal">∂</mi><mover accent="true"><mi>q</mi><mo>˙</mo></mover></mrow></mfrac><mo stretchy="false">)</mo><mo>−</mo><mo stretchy="false">(</mo><mfrac><mrow><mi mathvariant="normal">∂</mi><mi mathvariant="script">L</mi></mrow><mrow><mi mathvariant="normal">∂</mi><mi>q</mi></mrow></mfrac><mo stretchy="false">)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\frac{d}{dt}(\frac{\partial \mathcal{L}}{\partial\dot{q}}) - (\frac{\partial \mathcal{L}}{\partial q}) = 0
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.2519em;vertical-align:-0.8804em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="mord mathnormal">t</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">d</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord accent"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.6679em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.0556em;"><span class="mord">˙</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1944em;"><span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathcal">L</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="base"><span class="strut" style="height:2.2519em;vertical-align:-0.8804em;"></span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathnormal" style="margin-right:0.03588em;">q</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord" style="margin-right:0.05556em;">∂</span><span class="mord mathcal">L</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.8804em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6444em;"></span><span class="mord">0</span></span></span></span></span></p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>extend to soft body
+<ol>
+<li>should consider internal forces within the soft body</li>
+<li>FEM method: for each triangle face in the mesh, the deformation gradient is calculated as a variable of the strain</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>soft body dynamics
+<ol>
+<li>Continuum Mechanics
+<ol>
+<li>deals with the mechanical behavior of materials modeled as continuous substances, rather than as collections of discrete particles</li>
+<li>MLS-MPM</li>
+<li>FEM</li>
+</ol>
+</li>
+<li>Projective Dynamics: models object deformation as a projection onto its rest state, then minimizes an energy function that accounts for internal and external forces to obtain the desired dynamics
+<ol>
+<li>DiffPD</li>
+</ol>
+</li>
+<li>Compliant Position-Based Dynamics: computing particle positions
+<ol>
+<li>brax: uses XPBD for rigid body dynamics</li>
+<li>warp</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>fluid dynamics</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>contact model
+9.  contact forces are discontinuous, step-like functions, where the gradient is not well-defined
+10. purposes:</p>
+<ol>
+<li>resolve interpenetrating objects
+<ol>
+<li>in contact (normal velocities are zero)</li>
+<li>complementarity condition: not in contact (normal forces are zero)</li>
+</ol>
+</li>
+<li>to apply frictional forces
+<ol>
+<li>Coulomb’s friction law, formulation of friction forces, respect to normal force<img src="file:////home/jintian/reading_notes/Robotics/simulation/diff_sim_review/image.png" alt="alt text"></li>
+</ol>
+</li>
+<li>complementary problem</li>
+<li><img src="file:////home/jintian/reading_notes/Robotics/simulation/diff_sim_review/image-2.png" alt="alt text"></li>
+<li><img src="file:////home/jintian/reading_notes/Robotics/simulation/diff_sim_review/image-1.png" alt="alt text"></li>
+<li>NCP</li>
+<li>LCP</li>
+<li>compliant model</li>
+<li>approximate the contacts as soft contacts, The use of soft contacts can result in objects penetrating each other, however, this is normally aimed to be minimized</li>
+<li>position based models: first perform an update step without considering contact physics and then per-form a correction step to satisfy contact-based constraints</li>
+<li>MLS-MPM</li>
+<li>self-collision is automatically considered</li>
+<li>soft-rigid body collision are treated as boundary conditions</li>
+<li>gradient are direved analytically</li>
+</ol>
+</li>
+<li>
+<p>integrator
+15. use the computed forces to propagate a given dynamic model forwards in time
+16. explicit</p>
+<ol>
+<li><img src="file:////home/jintian/reading_notes/Robotics/simulation/diff_sim_review/image-3.png" alt="alt text"></li>
+<li>relatively straightforward to differentiate through</li>
+<li>less numerically stable</li>
+<li>a larger memory overhead</li>
+<li>implicit</li>
+<li><img src="file:////home/jintian/reading_notes/Robotics/simulation/diff_sim_review/image-4.png" alt="alt text"></li>
+<li>require more complex techniques to extract gradients
+<strong>use of differentiable simulator</strong>
+<img src="file:////home/jintian/reading_notes/Robotics/simulation/diff_sim_review/image-5.png" alt="alt text"></li>
+</ol>
+</li>
+<li>
+<p>warp</p>
+<ol>
+<li>support XPBD integration</li>
+<li>gradsim use warp</li>
+<li>support adding meshes</li>
+</ol>
+</li>
+<li>
+<p>difftaichi</p>
+<ol>
+<li>aiming to provide a method to calculate gradients of dynamical systems effectively and efficiently through source code transformations</li>
+<li>doesn't support urdf etc.</li>
+<li>kinematic chains needs to be entered pragmatically via the API</li>
+</ol>
+</li>
+<li>
+<p>brax</p>
+<ol>
+<li>supports MJCF and URDF</li>
+</ol>
+</li>
+<li>
+<p>GradSim</p>
+<ol>
+<li>does not support parallel execution</li>
+</ol>
+</li>
+<li>
+<p>dojo</p>
+<ol>
+<li>only allowing collisions between primitive shapes</li>
+<li>no longer actively maintained</li>
+</ol>
+</li>
+</ol>
+<p><strong>applications</strong>
+<img src="file:////home/jintian/reading_notes/Robotics/simulation/diff_sim_review/image-6.png" alt="alt text"></p>
+<ol>
+<li>system identification
+<ol>
+<li>construct an accurate mathematical model of a physical system by estimating unknown parameters based on observations of the system.<img src="file:////home/jintian/reading_notes/Robotics/simulation/diff_sim_review/image-7.png" alt="alt text"></li>
+<li>properties includes
+<ol>
+<li>mass, moment of inertia</li>
+<li>inertial and kinematics</li>
+<li>stiffness and elasticity of cloths, rope, actuated soft robotics, use knife to cut</li>
+<li>coefficient of friction</li>
+</ol>
+</li>
+<li>works include
+<ol>
+<li>knife and a soft object that it was cutting</li>
+<li>object sliding on a surface</li>
+<li>URDF models of household objects are iteratively improved using differentiable simulation by robot interaction</li>
+<li>estimate parameters of real-world systems</li>
+<li>system and control
+<ol>
+<li>‘ball-in-cup’’ task,</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>advantages
+<ol>
+<li>converge to lower cost solutions in less computational time</li>
+<li>&quot;parameter observability&quot;: possible to obtain parameters which are quite different from the ground truth values, while still yielding similar predicted trajectories</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>trajectory optimization
+<ol>
+<li>determine optimal sequences of states and control inputs for dynamic systems</li>
+<li><img src="file:////home/jintian/reading_notes/Robotics/simulation/diff_sim_review/image-8.png" alt="alt text"></li>
+</ol>
+</li>
+<li>morphology optimization
+<ol>
+<li>find a set of material and geometric properties of a system that optimizes predefined objectives</li>
+</ol>
+</li>
+<li>policy optimization
+<ol>
+<li>Analytic Policy Gradients: optimize neural network parameters directly to encode control policies</li>
+<li>Enhanced Policy Learning:
+<ol>
+<li>sample enhancement</li>
+<li>policy enhancement: the policy network is updated using physically-aware gradients from the differentiable physics simulator, which are generally more accurate 5. neural network augmented simulation</li>
+</ol>
+</li>
+<li>Policy Learning using Imitation Learning</li>
+<li>Improving Convergence</li>
+</ol>
+</li>
+<li>neural network augmented simulation
+<ol>
+<li>integration of a neural network and a differentiable physics engine for improved alignment between simulation and the real-world</li>
+</ol>
+</li>
+</ol>
+
+            <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+            
+        </body>
+        </html>
