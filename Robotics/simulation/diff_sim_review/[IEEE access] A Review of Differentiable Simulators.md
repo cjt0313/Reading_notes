@@ -112,7 +112,7 @@
       4. coefficient of friction
    3. works include
       1. knife and a soft object that it was cutting
-      2. object sliding on a surface
+      2. objectsliding on a surface
       3. URDF models of household objects are iteratively improved using differentiable simulation by robot interaction
       4. estimate parameters of real-world systems
       5. system and control
