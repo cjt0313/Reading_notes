@@ -1,12 +1,11 @@
-# [ICLR'23] DAXBENCH: BENCHMARKING DEFORMABLE OBJECT MANIPULATION WITH DIFFERENTIABLE PHYSICS
-1. Link: https://github.com/AdaCompNUS/DaXBench
-2. Arthurs and institution: Siwei Chen, Yiqing Xu, Cunjun Yu, Linfeng Li, Xiao Ma, Zhongwen Xu, David Hsu from NUS and Sea AI Lab
+# [CVPR'23] Imitation Learning as State Matching via Differentiable Physics
+1. Link: https://github.com/sail-sg/ILD
+2. Arthurs and institution: Siwei Chen, Xiao Ma, Zhongwen Xu from NUS and Sea AI Lab
 **TL;DR**
-We propose a differentiable simulation framework for deformable object manipulation (DOM), together with a BenchMark which consists of tasks with varying levels of difficulty and well-defined reward functions.
-
+We propose an imitation learning method that incorporates the differentiable physics simulator as a physics prior into its computational graph for policy learning.
 # comments and critisim
-1. can we represent a rigid body as mass-spring/particle dynamic model in DaX?
-2. what about the quality of gradient from contacts?
+1. how does the quality of gradient may affect policy learning process?
+
 ## Key points
 ### Comparison on key features with several simulators
 ![alt text](image.png)
