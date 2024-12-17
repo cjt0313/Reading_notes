@@ -1,6 +1,6 @@
 # [CoRL'24] Robot See Robot Do: Imitating Articulated Object Manipulation with Monocular 4D Reconstruction
 1. Link: https://robot-see-robot-do.github.io/
-2. Arthurs and institution: Justin Kerr*, Chung Min Kim*, Mingxuan Wu, Brent Yi, Qianqian Wang, Ken Goldbergm, Angjoo Kanazawa from UCB
+2. Arthurs and institution: Justin Kerr*, Chung Min Kim*, Mingxuan Wu, Brent Yi, Qianqian Wang, Ken Goldberg, Angjoo Kanazawa from UCB
       1. Angjoo Kanazawa is an AP in BAIR, UCB, she also hold position in Google research team, advisory board of Wonder Dynamics https://wonderdynamics.com/ and LumaAI https://lumalabs.ai/dream-machine.
 
 **TL;DR**
