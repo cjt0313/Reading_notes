@@ -4,6 +4,7 @@
 
 **NOTE**
 1. Eric Eaton and Dinesh Jayaraman are professors of GRASP lab
+2. the paper got 8, 8, 6, 6, 3 in ICLR'25 submission
 **TL;DR**
 A state-of-the-art method for articulating diverse in-the-wild objects from diverse input modalities, including text, images, and videos. 
 
