@@ -17,6 +17,11 @@ A learning system that can leverage a small amount of real-world data to autonom
    2. contains as much information in the scene, not just an object
 2. use gradient from simulator instead of the non-linear approximation
 ## Related works
+$f(s_h, a_h,\theta)$
+
+$\theta$: state parameters (mass, friction, ...)
+
+$\nabla_\theta f_\theta(s_h, a_h) = \frac{f_\theta(s_h, a_h) - f_\theta(s_{h-1}, a_{h-1})}{\Delta t}$
 ### System Identification
 1. theoretical (dynamic system, control theory):
    1. how to learn a model of the system dynamics efficiently
